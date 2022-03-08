@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "13573927-9277-4d8b-91fe-a10fc4543ba6": {
+      "ProjectGuid": "13573927-9277-4d8b-91fe-a10fc4543ba6",
+      "DisplayName": "JwtLoginAPI",
+      "ColorIndex": 0
+    }
+  },
+  "NextColorIndex": 1
+}
