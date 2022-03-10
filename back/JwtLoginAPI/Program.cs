@@ -36,6 +36,11 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 
+    builder.Services.AddCors(p => p.AddPolicy("allow", builder =>
+        {
+            builder.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
+        }));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -44,6 +49,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors("allow");
 
 app.UseHttpsRedirection();
 
