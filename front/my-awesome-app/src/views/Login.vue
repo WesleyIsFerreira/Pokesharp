@@ -1,9 +1,8 @@
 <template>
   <div class="bg-cover min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8" style="background-image: url('img/bg.jpg')">
-    <div class="max-w-md w-full space-y-8">
+    <div class="max-w-xs w-full space-y-8">
       <div>
-        <img class="z-10 mx-auto h-20 rounded-full w-auto" src="img/Logo.png" alt="Workflow" />
-        <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">Área de testes</h2>
+        <img class="z-10 mx-auto h-20 w-auto" src="img/pokedex.png" alt="Workflow" />
       </div>
       <form class="mt-8 space-y-6" action="#" method="POST">
         <input type="hidden" name="remember" value="true" />
@@ -18,11 +17,16 @@
           </div>
         </div>
         <div>
-          <button @click="logar" type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+          <button :disabled="loading" @click="logar" type="submit" class="group relative w-1/2 flex justify-center py-2 px-4 border border-transparent text-sm mx-auto font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
             <span class="absolute left-0 inset-y-0 flex items-center pl-3">
-              <LockClosedIcon class="h-5 w-5 text-indigo-500 group-hover:text-indigo-400" aria-hidden="true" />
+              <div v-if="loading" class="flex justify-center items-center">
+                <div class="spinner-border animate-spin inline-block w-8 h-8 border-4 rounded-full" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+              </div>
+              <LockClosedIcon v-else class="h-5 w-5 text-indigo-500 group-hover:text-indigo-400" aria-hidden="true" />
             </span>
-            Sign in
+            Entrar
           </button>
         </div>
       </form>
@@ -33,8 +37,9 @@
 <script>
 // @ is an alias to /src
 import { LockClosedIcon } from '@heroicons/vue/solid'
-import Logins from '../services/login'
+import Auth from '../services/auth'
 import { ref } from 'vue'
+import router from '../router/index.js'
 
 export default {
   name: 'Home',
@@ -43,11 +48,20 @@ export default {
   },
   setup() {
 
+    if (JSON.parse(localStorage.getItem('token'))){
+      router.push("home")
+    }
+
+    //setando para usar o toast
+    const { toast } = require('tailwind-toast')
+
     const user = ref('')
     const password = ref('')
     
     function logar(event){
       event.preventDefault()
+
+      startLoading() 
       console.log(user.value)
       console.log(password.value)
 
@@ -56,22 +70,49 @@ export default {
         Password: password.value
       }
 
-      console.log(usuario)
+      Auth.login(usuario).then(resp => {
+          stopLoading()
+          localStorage.setItem('token', JSON.stringify(resp.data))
 
-      Logins.login(usuario).then(resp => {
-          console.log(resp)
+          router.push("home")
       }).catch(function (error) {
         if (error.response) {
-          console.log(error.response.data);
-          console.log(error.response.status);
-          console.log(error.response.headers);
+          toast()
+          .default('Erro: ', error.response.data)
+          .with({
+            shape: 'pill',
+            duration: 3000,
+            speed: 1000,
+            positionX: 'end',
+            positionY: 'top',
+            color: 'bg-yellow-300',
+            fontColor: 'white',
+            fontTone: 200
+          }).show()
+          stopLoading()
         }
       })
-
     }
 
-    
-    return {logar, user, password} // qualquer dado retornado aqui estará disponível para o restante do componente
+    //Setando Loadings
+    const loading = ref(false)
+
+    function startLoading(){
+      loading.value = true
+    }
+
+    function stopLoading(){
+      loading.value = false
+    }
+
+    return {
+      logar, 
+      user,
+      password, 
+      loading,
+      startLoading,
+      stopLoading
+    } // qualquer dado retornado aqui estará disponível para o restante do componente
   }
 
 }

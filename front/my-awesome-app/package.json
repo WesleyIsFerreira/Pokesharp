@@ -12,6 +12,7 @@
     "@heroicons/vue": "^1.0.6",
     "axios": "^0.26.0",
     "core-js": "^3.6.5",
+    "tailwind-toast": "^1.1.0",
     "tw-elements": "^1.0.0-alpha11",
     "vue": "^3.0.0",
     "vue-router": "^4.0.0-0",

@@ -12,6 +12,7 @@ const routes = [
     path: '/home',
     name: 'Home',
     component: Home
+
   },
   {
     path: '/about',
@@ -26,6 +27,18 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  const publicPages = ['/']
+  const authRequired = !publicPages.includes(to.path)
+  const loggedIn = localStorage.getItem('token')
+
+  if (authRequired && !loggedIn) {
+    next('/')
+  } else {
+    next()
+  }
 })
 
 export default router
