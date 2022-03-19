@@ -3,17 +3,18 @@
     <div class="max-w-xs w-full space-y-8">
       <div>
         <img class="z-10 mx-auto h-20 w-auto" src="img/pokedex.png" alt="Workflow" />
+
       </div>
       <form class="mt-8 space-y-6" action="#" method="POST">
         <input type="hidden" name="remember" value="true" />
         <div class="rounded-md shadow-sm -space-y-px">
           <div>
-            <label for="user" class="sr-only">Usuário</label>
-            <input v-model="user" id="user" name="user" type="text" autocomplete="off" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Usuário" />
+            <label for="user" class="sr-only">User Name</label>
+            <input v-model="user" id="user" name="user" type="text" autocomplete="off" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="User Name" />
           </div>
           <div>
-            <label for="password" class="sr-only">Senha</label>
-            <input v-model="password" id="password" name="password" type="password" autocomplete="current-password" required="" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Senha" />
+            <label for="password" class="sr-only">Password</label>
+            <input v-model="password" id="password" name="password" type="password" autocomplete="current-password" required="" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Password" />
           </div>
         </div>
         <div>
@@ -48,7 +49,10 @@ export default {
   },
   setup() {
 
-    if (JSON.parse(localStorage.getItem('token'))){
+    console.log(localStorage.getItem('token'))
+    //console.log(localStorage.getItem('token').split(' '))
+
+    if (localStorage.getItem('token') && localStorage.getItem('token') != undefined && localStorage.getItem('token') != "undefined"){
       router.push("home")
     }
 
@@ -57,39 +61,55 @@ export default {
 
     const user = ref('')
     const password = ref('')
-    
+
     function logar(event){
       event.preventDefault()
 
-      startLoading() 
-      console.log(user.value)
-      console.log(password.value)
+      startLoading()
 
       const usuario = {
         UserName: user.value,
         Password: password.value
       }
 
-      Auth.login(usuario).then(resp => {
+      Auth.login(usuario).then((resp) => {
           stopLoading()
-          localStorage.setItem('token', JSON.stringify(resp.data))
-
+          console.log(resp)
+          localStorage.setItem('token', 'Bearer ' + (resp.data.token))
           router.push("home")
       }).catch(function (error) {
         if (error.response) {
-          toast()
-          .default('Erro: ', error.response.data)
-          .with({
-            shape: 'pill',
-            duration: 3000,
-            speed: 1000,
-            positionX: 'end',
-            positionY: 'top',
-            color: 'bg-yellow-300',
-            fontColor: 'white',
-            fontTone: 200
-          }).show()
+          if (error.response.data.errors)
+            toast()
+              .default('Atenção:',error.response.data.errors[0].errorMessage)
+              .with({
+                shape: 'pill',
+                duration: 3000,
+                speed: 1000,
+                positionX: 'end',
+                positionY: 'top',
+                color: 'bg-yellow-300',
+                fontColor: 'white',
+                fontTone: 200
+              })
+              .show()
+          else
+            toast()
+              .default('Atenção: ', "'User Name' ou 'Passwor' incorretos")
+              .with({
+                shape: 'pill',
+                duration: 3000,
+                speed: 1000,
+                positionX: 'end',
+                positionY: 'top',
+                color: 'bg-yellow-300',
+                fontColor: 'white',
+                fontTone: 200
+              })
+              .show()
+
           stopLoading()
+
         }
       })
     }

@@ -32,7 +32,11 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const publicPages = ['/']
   const authRequired = !publicPages.includes(to.path)
-  const loggedIn = localStorage.getItem('token')
+
+  let loggedIn = false
+
+  if (localStorage.getItem('token') && localStorage.getItem('token').includes('Bearer'))
+    loggedIn = true
 
   if (authRequired && !loggedIn) {
     next('/')
