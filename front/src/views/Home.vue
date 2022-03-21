@@ -1,6 +1,6 @@
 <template>
   <div>
-    <NavBarVue />
+    <NavBarVue page="Home" />
     <div class="mx-2 bg-blue-200 rounded-md border-2 border-gray-500 mt-5 py-3">
       <div class="grid grid-cols-5">
         <div class="grid  col-span-3 content-center">

@@ -35,12 +35,17 @@
           <!-- Left links -->
           <ul class="navbar-nav flex flex-col pl-0 list-style-none mr-auto">
             <li class="nav-item p-2">
-              <a class="nav-link text-white" href="#">Início</a>
+              <a 
+                :class="[page == 'Home' ? '' : 'opacity-60 hover:opacity-80 focus:opacity-80 p-0']"
+                class="nav-link text-white" href="#"
+                >
+                  Início
+              </a>
             </li>
             <li class="nav-item p-2">
               <a
-                class="nav-link text-white opacity-60 hover:opacity-80 focus:opacity-80 p-0"
-                href="#"
+                :class="[page == 'Pokemons' ? '' : 'opacity-60 hover:opacity-80 focus:opacity-80 p-0']"
+                class="nav-link text-white" href="#"
                 >Pokémons</a
               >
             </li>
@@ -89,7 +94,6 @@
 </template>
 
 <script>
-// @ is an alias to /src
 import Auth from '../services/auth'
 
 export default {
@@ -97,7 +101,11 @@ export default {
   components: {
     
   },
+  props: {
+    page: String
+  },
   setup() {
+
       function logout(){
         Auth.logout()
       }
