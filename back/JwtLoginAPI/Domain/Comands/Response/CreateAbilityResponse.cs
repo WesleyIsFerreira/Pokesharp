@@ -1,6 +1,6 @@
 ﻿namespace JwtLoginAPI.Domain.Comands.Response
 {
-    public class CreateAbilitiesResponse
+    public class CreateAbilityResponse
     {
         public int Id { get; set; }
         public string name { get; set; } = String.Empty;
