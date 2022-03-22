@@ -16,6 +16,8 @@ builder.Services.AddControllers();
 builder.Services.AddTransient<IUserHandlerCommand, UserHandlerCommand>();
 builder.Services.AddTransient<IUserHandlerQuery, UserHandlerQuery>();
 
+builder.Services.AddTransient<IAbilityHandlerCommand, AbilityHandlerCommand>();
+
 builder.Services.AddDbContext<DataContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));

@@ -37,7 +37,7 @@
             <li class="nav-item p-2">
               <a 
                 :class="[page == 'Home' ? '' : 'opacity-60 hover:opacity-80 focus:opacity-80 p-0']"
-                class="nav-link text-white" href="#"
+                class="nav-link text-white" href="/home"
                 >
                   Início
               </a>
@@ -45,7 +45,7 @@
             <li class="nav-item p-2">
               <a
                 :class="[page == 'Pokemons' ? '' : 'opacity-60 hover:opacity-80 focus:opacity-80 p-0']"
-                class="nav-link text-white" href="#"
+                class="nav-link text-white" href="/pokemons"
                 >Pokémons</a
               >
             </li>

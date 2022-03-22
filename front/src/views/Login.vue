@@ -49,9 +49,6 @@ export default {
   },
   setup() {
 
-    console.log(localStorage.getItem('token'))
-    //console.log(localStorage.getItem('token').split(' '))
-
     if (localStorage.getItem('token') && localStorage.getItem('token') != undefined && localStorage.getItem('token') != "undefined"){
       router.push("home")
     }

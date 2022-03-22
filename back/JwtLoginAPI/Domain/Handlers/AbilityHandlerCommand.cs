@@ -4,7 +4,7 @@ using JwtLoginAPI.Domain.Entities;
 
 namespace JwtLoginAPI.Domain.Handlers
 {
-    public class AbilityHandlerCommand
+    public class AbilityHandlerCommand : IAbilityHandlerCommand
     {
         private readonly DataContext _context;
         public AbilityHandlerCommand(DataContext context)
@@ -19,7 +19,7 @@ namespace JwtLoginAPI.Domain.Handlers
             newAbility.Description = request.Description;
 
             _context.Abilities.Add(newAbility);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             return new CreateAbilityResponse
             {
