@@ -1,5 +1,5 @@
-﻿using JwtLoginAPI.Domain.Entities;
-using static JwtLoginAPI.Domain.Comands.Entities.Pokemon;
+﻿using JwtLoginAPI.Domain.Comands.Entities;
+using JwtLoginAPI.Domain.Entities;
 
 namespace JwtLoginAPI.Domain.Comands.Response
 {

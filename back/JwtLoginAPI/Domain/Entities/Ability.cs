@@ -1,5 +1,4 @@
 ﻿using JwtLoginAPI.Domain.Comands.Entities;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace JwtLoginAPI.Domain.Entities
 {

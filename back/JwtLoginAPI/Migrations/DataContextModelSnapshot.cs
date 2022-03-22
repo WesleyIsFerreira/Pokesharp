@@ -95,7 +95,7 @@ namespace JwtLoginAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Ability");
+                    b.ToTable("Abilities");
                 });
 
             modelBuilder.Entity("JwtLoginAPI.Domain.Entities.User", b =>

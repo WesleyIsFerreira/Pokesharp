@@ -1,15 +1,16 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace JwtLoginAPI.Migrations
 {
-    public partial class Pokemon : Migration
+    public partial class setDba : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Ability",
+                name: "Abilities",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -19,7 +20,7 @@ namespace JwtLoginAPI.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Ability", x => x.Id);
+                    table.PrimaryKey("PK_Abilities", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -43,6 +44,21 @@ namespace JwtLoginAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PasswordHash = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
+                    PasswordSalt = table.Column<byte[]>(type: "varbinary(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AbilityPokemon",
                 columns: table => new
                 {
@@ -53,9 +69,9 @@ namespace JwtLoginAPI.Migrations
                 {
                     table.PrimaryKey("PK_AbilityPokemon", x => new { x.AbilitiesId, x.PokemonsId });
                     table.ForeignKey(
-                        name: "FK_AbilityPokemon_Ability_AbilitiesId",
+                        name: "FK_AbilityPokemon_Abilities_AbilitiesId",
                         column: x => x.AbilitiesId,
-                        principalTable: "Ability",
+                        principalTable: "Abilities",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -78,7 +94,10 @@ namespace JwtLoginAPI.Migrations
                 name: "AbilityPokemon");
 
             migrationBuilder.DropTable(
-                name: "Ability");
+                name: "Users");
+
+            migrationBuilder.DropTable(
+                name: "Abilities");
 
             migrationBuilder.DropTable(
                 name: "Pokemons");

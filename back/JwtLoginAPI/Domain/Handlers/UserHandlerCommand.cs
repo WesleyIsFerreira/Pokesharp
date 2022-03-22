@@ -25,7 +25,7 @@ namespace JwtLoginAPI.Domain.Handlers
 
             
             _context.Users.Add(user);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             
 
             return new CreateUserResponse
