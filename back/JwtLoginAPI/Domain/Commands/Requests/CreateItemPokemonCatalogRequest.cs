@@ -1,11 +1,10 @@
-﻿using JwtLoginAPI.Domain.Comands.Entities;
+﻿using JwtLoginAPI.Domain.Commands.Entities;
 using JwtLoginAPI.Domain.Entities;
 
-namespace JwtLoginAPI.Domain.Comands.Response
+namespace JwtLoginAPI.Domain.Commands.Requests
 {
-    public class CreateItemPokemonCatalogResponse
+    public class CreateItemPokemonCatalogRequest
     {
-        public int Id { get; set; }
         public string Name { get; set; } = String.Empty;
         public string Description { get; set; } = String.Empty;
         public string Category { get; set; } = String.Empty;

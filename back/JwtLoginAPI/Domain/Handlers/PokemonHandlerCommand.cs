@@ -1,6 +1,6 @@
-﻿using JwtLoginAPI.Domain.Comands.Entities;
-using JwtLoginAPI.Domain.Comands.Requests;
-using JwtLoginAPI.Domain.Comands.Response;
+﻿using JwtLoginAPI.Domain.Commands.Entities;
+using JwtLoginAPI.Domain.Commands.Requests;
+using JwtLoginAPI.Domain.Commands.Response;
 
 namespace JwtLoginAPI.Domain.Handlers
 {

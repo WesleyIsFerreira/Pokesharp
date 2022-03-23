@@ -1,6 +1,6 @@
 ﻿using JwtLoginAPI.Domain.Entities;
 
-namespace JwtLoginAPI.Domain.Comands.Entities
+namespace JwtLoginAPI.Domain.Commands.Entities
 {
     public class Pokemon
     {

@@ -1,4 +1,4 @@
-﻿namespace JwtLoginAPI.Domain.Comands.Requests
+﻿namespace JwtLoginAPI.Domain.Commands.Requests
 {
     public class CreateUserRequest
     {

@@ -1,4 +1,4 @@
-﻿namespace JwtLoginAPI.Domain.Comands.Response
+﻿namespace JwtLoginAPI.Domain.Commands.Response
 {
     public class AddPokemonAbilityResponse
     {

@@ -37,7 +37,7 @@ namespace JwtLoginAPI.Migrations
                     b.ToTable("AbilityPokemon");
                 });
 
-            modelBuilder.Entity("JwtLoginAPI.Domain.Comands.Entities.Pokemon", b =>
+            modelBuilder.Entity("JwtLoginAPI.Domain.Commands.Entities.Pokemon", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -134,7 +134,7 @@ namespace JwtLoginAPI.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("JwtLoginAPI.Domain.Comands.Entities.Pokemon", null)
+                    b.HasOne("JwtLoginAPI.Domain.Commands.Entities.Pokemon", null)
                         .WithMany()
                         .HasForeignKey("PokemonsId")
                         .OnDelete(DeleteBehavior.Cascade)

@@ -1,4 +1,4 @@
-﻿using JwtLoginAPI.Domain.Comands.Entities;
+﻿using JwtLoginAPI.Domain.Commands.Entities;
 using JwtLoginAPI.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
