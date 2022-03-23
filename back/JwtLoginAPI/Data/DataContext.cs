@@ -18,15 +18,26 @@ namespace JwtLoginAPI.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            var converter = new ValueConverter<Type, string>(
-                    v => v.ToString(),
-                    v => (Type)Enum.Parse(typeof(Type), v)
-                );
+            modelBuilder
+            .Entity<Pokemon>()
+            .Property(e => e.Gender)
+            .HasConversion(
+                v => v.ToString(),
+                v => (Genders)Enum.Parse(typeof(Genders), v));
 
-                modelBuilder
-                    .Entity<Pokemon>()
-                    .Property(e => e.Type)
-                    .HasConversion(converter);
+            modelBuilder
+            .Entity<Pokemon>()
+            .Property(e => e.Type)
+            .HasConversion(
+                v => v.ToString(),
+                v => (Types)Enum.Parse(typeof(Types), v));
+
+            modelBuilder
+            .Entity<Pokemon>()
+            .Property(e => e.Weaknesses)
+            .HasConversion(
+                v => v.ToString(),
+                v => (Types)Enum.Parse(typeof(Types), v));
         }
 
     }

@@ -4,14 +4,18 @@ using JwtLoginAPI.Domain.Handlers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json.Converters;
 using Swashbuckle.AspNetCore.Filters;
 using System.Text;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddNewtonsoftJson(x => x.SerializerSettings.Converters.Add(new StringEnumConverter()))
+    .AddJsonOptions(p => p.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 
 builder.Services.AddTransient<IUserHandlerCommand, UserHandlerCommand>();
 builder.Services.AddTransient<IUserHandlerQuery, UserHandlerQuery>();
