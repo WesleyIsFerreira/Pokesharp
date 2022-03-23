@@ -24,6 +24,8 @@ builder.Services.AddTransient<IAbilityHandlerCommand, AbilityHandlerCommand>();
 
 builder.Services.AddTransient<IPokemonHandlerCommand, PokemonHandlerCommand>();
 
+builder.Services.AddTransient<IAddPokemonAbilityHandler, AddPokemonAbilityHandler>();
+
 builder.Services.AddDbContext<DataContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
