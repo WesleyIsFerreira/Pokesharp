@@ -5,6 +5,6 @@ namespace JwtLoginAPI.Domain.Handlers
 {
     public interface IAddPokemonAbilityHandler
     {
-        Task<AddPokemonAbilityResponse> AddPokemonAbility(AddPokemonAbilityRequest request);
+        Task<AddPokemonAbilityCommandResponse> AddPokemonAbility(AddPokemonAbilityCommandRequest request);
     }
 }

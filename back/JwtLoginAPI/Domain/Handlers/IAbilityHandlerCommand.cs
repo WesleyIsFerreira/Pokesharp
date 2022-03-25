@@ -5,6 +5,6 @@ namespace JwtLoginAPI.Domain.Handlers
 {
     public interface IAbilityHandlerCommand
     {
-        Task<CreateAbilityResponse> CreateAbility(CreateAbilityRequest request);
+        Task<CreateAbilityCommandResponse> CreateAbility(CreateAbilityCommandRequest request);
     }
 }

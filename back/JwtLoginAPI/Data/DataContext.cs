@@ -2,6 +2,7 @@
 using JwtLoginAPI.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using System.Text.Json;
 
 namespace JwtLoginAPI.Data
 {
@@ -38,6 +39,8 @@ namespace JwtLoginAPI.Data
             .HasConversion(
                 v => v.ToString(),
                 v => (Types)Enum.Parse(typeof(Types), v));
+
+
         }
 
     }

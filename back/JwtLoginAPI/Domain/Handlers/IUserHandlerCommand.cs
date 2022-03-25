@@ -5,6 +5,6 @@ namespace JwtLoginAPI.Domain.Handlers
 {
     public interface IUserHandlerCommand
     {
-        Task<CreateUserResponse> CreateUser(CreateUserRequest request);
+        Task<CreateUserCommandResponse> CreateUser(CreateUserCommandRequest request);
     }
 }

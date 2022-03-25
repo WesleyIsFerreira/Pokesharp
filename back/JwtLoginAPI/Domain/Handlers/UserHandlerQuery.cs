@@ -19,14 +19,14 @@ namespace JwtLoginAPI.Domain.Handlers
             this.configuration = configuration;
         }
 
-        public async Task<CreateTokenLoginResponse> generateToken(CreateTokenLoginRequest request)
+        public async Task<CreateTokenLoginQueryResponse> generateToken(CreateTokenLoginQueryRequest request)
         {
             var validator = new UserValidator();
             var result = validator.Validate(request);
 
             if (!result.IsValid)
             {
-                return new CreateTokenLoginResponse
+                return new CreateTokenLoginQueryResponse
                 {
                     Token = "",
                     Success = false,
@@ -37,13 +37,13 @@ namespace JwtLoginAPI.Domain.Handlers
             var user = await _context.Users.SingleAsync(b => b.UserName == request.UserName);
 
             if (!VerifyPasswordHash(request.Password, user.PasswordHash, user.PasswordSalt))
-                return new CreateTokenLoginResponse
+                return new CreateTokenLoginQueryResponse
                 {
                     Token = "",
                     Success = false,
                 };
 
-            return new CreateTokenLoginResponse
+            return new CreateTokenLoginQueryResponse
             {
                 Token = CreateToken(user)
             };

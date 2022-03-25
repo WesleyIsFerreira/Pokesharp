@@ -3,7 +3,7 @@ using JwtLoginAPI.Domain.Entities;
 
 namespace JwtLoginAPI.Domain.Commands.Requests
 {
-    public class CreateItemPokemonCatalogRequest
+    public class CreateItemPokemonCatalogCommandRequest
     {
         public string Name { get; set; } = String.Empty;
         public string Description { get; set; } = String.Empty;

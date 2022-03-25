@@ -11,8 +11,8 @@ namespace JwtLoginAPI.Domain.Commands.Entities
         public Genders Gender { get; set; }
         public double Height { get; set; }
         public double Weight { get; set; }
-        public Types Type { get; set; }
-        public Types Weaknesses { get; set; }
+        public Types? Type { get; set; }
+        public Types? Weaknesses { get; set; }
         public List<Ability>? Abilities { get; set; }
     }
 

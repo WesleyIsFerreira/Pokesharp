@@ -1,6 +1,6 @@
-﻿namespace JwtLoginAPI.Domain.Commands.Requests
+﻿namespace JwtLoginAPI.Domain.Queries.Request
 {
-    public class CreateUserRequest
+    public class CreateTokenLoginQueryRequest
     {
         public string UserName { get; set; } = String.Empty;
         public string Password { get; set; } = String.Empty;

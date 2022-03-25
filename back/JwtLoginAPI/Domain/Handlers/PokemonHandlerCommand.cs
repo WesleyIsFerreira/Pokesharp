@@ -13,7 +13,7 @@ namespace JwtLoginAPI.Domain.Handlers
         }
 
 
-        public async Task<CreateItemPokemonCatalogResponse> CreatePokemon(CreateItemPokemonCatalogRequest request)
+        public async Task<CreateItemPokemonCatalogCommandResponse> CreatePokemon(CreateItemPokemonCatalogCommandRequest request)
         {
             Pokemon newPokemon = new Pokemon();
             newPokemon.Name = request.Name;
@@ -28,7 +28,7 @@ namespace JwtLoginAPI.Domain.Handlers
             _context.Pokemons.Add(newPokemon);
             await _context.SaveChangesAsync();
 
-            return new CreateItemPokemonCatalogResponse
+            return new CreateItemPokemonCatalogCommandResponse
             {
                 Id = newPokemon.Id,
                 Description = newPokemon.Description,
@@ -36,8 +36,8 @@ namespace JwtLoginAPI.Domain.Handlers
                 Gender = newPokemon.Gender,
                 Height = newPokemon.Height,
                 Weight = newPokemon.Weight,
-                Type = newPokemon.Type,
-                Weaknesses = newPokemon.Weaknesses
+                Type = (Types)newPokemon.Type,
+                Weaknesses = (Types)newPokemon.Weaknesses
             };
         }
     }

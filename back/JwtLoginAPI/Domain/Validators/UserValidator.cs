@@ -3,7 +3,7 @@ using JwtLoginAPI.Domain.Queries.Request;
 
 namespace JwtLoginAPI.Domain.Validators
 {
-    public class UserValidator : AbstractValidator<CreateTokenLoginRequest>
+    public class UserValidator : AbstractValidator<CreateTokenLoginQueryRequest>
     {
         public UserValidator()
         {

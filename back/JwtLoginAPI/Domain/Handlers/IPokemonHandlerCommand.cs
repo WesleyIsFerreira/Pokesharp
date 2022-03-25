@@ -5,6 +5,6 @@ namespace JwtLoginAPI.Domain.Handlers
 {
     public interface IPokemonHandlerCommand
     {
-        Task<CreateItemPokemonCatalogResponse> CreatePokemon(CreateItemPokemonCatalogRequest request);
+        Task<CreateItemPokemonCatalogCommandResponse> CreatePokemon(CreateItemPokemonCatalogCommandRequest request);
     }
 }

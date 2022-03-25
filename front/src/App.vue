@@ -24,7 +24,7 @@
                 focus:bg-green-600 focus:shadow-lg focus:outline-none focus:ring-0 
                 transition duration-150 ease-in-out
     }
-    .input {
+    .input-form {
       @apply  form-control
               block
               w-full
@@ -38,12 +38,30 @@
               rounded
               transition
               ease-in-out
-              m-0
+              mb-1
               focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none
     }
-    .label {
-      @apply  inline-block mb-2 
+    .label-form {
+      @apply  inline-block 
               text-gray-700 
               text-sm
+    }
+    .select-form {
+      @apply  form-select 
+              appearance-none
+              block
+              w-full
+              px-2
+              py-1
+              text-sm
+              font-normal
+              text-gray-700
+              bg-white bg-clip-padding bg-no-repeat
+              border border-solid border-gray-300
+              rounded
+              transition
+              ease-in-out
+              m-0
+              focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none
     }
 </style>

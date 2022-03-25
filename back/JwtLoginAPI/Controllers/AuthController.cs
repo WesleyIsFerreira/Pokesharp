@@ -18,9 +18,9 @@ namespace JwtLoginAPI.Controllers
     public class AuthController : ControllerBase
     {
         [HttpPost("Register")]
-        public async Task<ActionResult<CreateUserResponse>> Register(
+        public async Task<ActionResult<CreateUserCommandResponse>> Register(
             [FromServices]IUserHandlerCommand handler,
-            [FromBody]CreateUserRequest command
+            [FromBody]CreateUserCommandRequest command
         )
         {
             return await handler.CreateUser(command);
@@ -29,12 +29,12 @@ namespace JwtLoginAPI.Controllers
         [HttpPost("Login")]
         public async Task<IActionResult> Login(
             [FromServices]IUserHandlerQuery handler,
-            [FromBody]CreateTokenLoginRequest query
+            [FromBody]CreateTokenLoginQueryRequest query
         )
         {
             try
             {
-                CreateTokenLoginResponse resp = await handler.generateToken(query);
+                CreateTokenLoginQueryResponse resp = await handler.generateToken(query);
 
                 if(resp != null && resp.Success)
                 {

@@ -12,7 +12,7 @@ namespace JwtLoginAPI.Domain.Handlers
             _context = context;
         }
 
-        public async Task<CreateAbilityResponse> CreateAbility(CreateAbilityRequest request)
+        public async Task<CreateAbilityCommandResponse> CreateAbility(CreateAbilityCommandRequest request)
         {
             Ability newAbility = new Ability();
             newAbility.Name = request.Name;
@@ -21,7 +21,7 @@ namespace JwtLoginAPI.Domain.Handlers
             _context.Abilities.Add(newAbility);
             await _context.SaveChangesAsync();
 
-            return new CreateAbilityResponse
+            return new CreateAbilityCommandResponse
             {
                 Id = newAbility.Id,
                 name = newAbility.Name,

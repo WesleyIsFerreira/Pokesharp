@@ -2,7 +2,7 @@
 
 namespace JwtLoginAPI.Domain.Queries.Response
 {
-    public class CreateTokenLoginResponse
+    public class CreateTokenLoginQueryResponse
     {
         public string Token { get; set; } = String.Empty;
         public bool Success { get; set; } = true;

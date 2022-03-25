@@ -12,7 +12,7 @@ namespace JwtLoginAPI.Domain.Handlers
             _context = context;
         }
 
-        public async Task<AddPokemonAbilityResponse> AddPokemonAbility(AddPokemonAbilityRequest request)
+        public async Task<AddPokemonAbilityCommandResponse> AddPokemonAbility(AddPokemonAbilityCommandRequest request)
         {
             var ability = await _context.Abilities.FindAsync(request.AbilityId);
 
@@ -23,7 +23,7 @@ namespace JwtLoginAPI.Domain.Handlers
 
             if (ability == null || pokemon == null)
             {
-                return new AddPokemonAbilityResponse
+                return new AddPokemonAbilityCommandResponse
                 {
                     Msg = "Pokemon ou Habilidade não encontrada",
                     Success = false
@@ -33,7 +33,7 @@ namespace JwtLoginAPI.Domain.Handlers
             pokemon.Abilities.Add(ability);
 
             await _context.SaveChangesAsync();
-            return new AddPokemonAbilityResponse
+            return new AddPokemonAbilityCommandResponse
             {
                 Msg = "Habilidade vinculada com Sucesso"
             };

@@ -13,7 +13,7 @@ namespace JwtLoginAPI.Domain.Handlers
             _context = context;
         }
 
-        public async Task<CreateUserResponse> CreateUser(CreateUserRequest request)
+        public async Task<CreateUserCommandResponse> CreateUser(CreateUserCommandRequest request)
         {
 
             CreatePassword(request.Password, out byte[] passwordHash, out byte[] passwordSalt);
@@ -28,7 +28,7 @@ namespace JwtLoginAPI.Domain.Handlers
             await _context.SaveChangesAsync();
             
 
-            return new CreateUserResponse
+            return new CreateUserCommandResponse
             {
                 Id = user.Id,
                 UserName = user.UserName

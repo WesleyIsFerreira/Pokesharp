@@ -23,6 +23,9 @@ builder.Services.AddTransient<IUserHandlerQuery, UserHandlerQuery>();
 builder.Services.AddTransient<IAbilityHandlerCommand, AbilityHandlerCommand>();
 
 builder.Services.AddTransient<IPokemonHandlerCommand, PokemonHandlerCommand>();
+builder.Services.AddTransient<IPokemonHandlerQuery, PokemonHandlerQuery>();
+
+
 
 builder.Services.AddTransient<IAddPokemonAbilityHandler, AddPokemonAbilityHandler>();
 

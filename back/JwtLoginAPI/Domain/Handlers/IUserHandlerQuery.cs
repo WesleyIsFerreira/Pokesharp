@@ -5,6 +5,6 @@ namespace JwtLoginAPI.Domain.Handlers
 {
     public interface IUserHandlerQuery
     {
-        Task<CreateTokenLoginResponse> generateToken(CreateTokenLoginRequest request);
+        Task<CreateTokenLoginQueryResponse> generateToken(CreateTokenLoginQueryRequest request);
     }
 }
