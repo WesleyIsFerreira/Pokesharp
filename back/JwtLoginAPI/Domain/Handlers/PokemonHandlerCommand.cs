@@ -24,7 +24,6 @@ namespace JwtLoginAPI.Domain.Handlers
             newPokemon.Weight = request.Weight;
             newPokemon.Type = request.Type;
             newPokemon.Weaknesses = request.Weaknesses;
-
             _context.Pokemons.Add(newPokemon);
             await _context.SaveChangesAsync();
 
@@ -36,8 +35,8 @@ namespace JwtLoginAPI.Domain.Handlers
                 Gender = newPokemon.Gender,
                 Height = newPokemon.Height,
                 Weight = newPokemon.Weight,
-                Type = (Types)newPokemon.Type,
-                Weaknesses = (Types)newPokemon.Weaknesses
+                Type = newPokemon.Type,
+                Weaknesses = newPokemon.Weaknesses
             };
         }
     }

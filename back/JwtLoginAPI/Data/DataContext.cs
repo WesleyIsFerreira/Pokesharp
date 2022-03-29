@@ -1,6 +1,6 @@
 ﻿using JwtLoginAPI.Domain.Commands.Entities;
 using JwtLoginAPI.Domain.Entities;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System.Text.Json;
 
@@ -22,24 +22,34 @@ namespace JwtLoginAPI.Data
             modelBuilder
             .Entity<Pokemon>()
             .Property(e => e.Gender)
-            .HasConversion(
+            .HasConversion(  
                 v => v.ToString(),
-                v => (Genders)Enum.Parse(typeof(Genders), v));
+                v => (Gender)Enum.Parse(typeof(Gender), v));
+
 
             modelBuilder
-            .Entity<Pokemon>()
-            .Property(e => e.Type)
-            .HasConversion(
-                v => v.ToString(),
-                v => (Types)Enum.Parse(typeof(Types), v));
+                .Entity<Pokemon>()
+                .Property(m => m.Type)
+                .HasConversion(
+                    v => JsonSerializer.Serialize(v, (JsonSerializerOptions)null),
+                    v => JsonSerializer.Deserialize<List<string>>(v, (JsonSerializerOptions)null),
+                    new ValueComparer<ICollection<string>>(
+                    (c1, c2) => c1.SequenceEqual(c2),
+                    c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
+                    c => (ICollection<string>)c.ToList())
+                );
 
             modelBuilder
-            .Entity<Pokemon>()
-            .Property(e => e.Weaknesses)
-            .HasConversion(
-                v => v.ToString(),
-                v => (Types)Enum.Parse(typeof(Types), v));
+                .Entity<Pokemon>()
+                .Property(m => m.Weaknesses)
+                .HasConversion(v => JsonSerializer.Serialize(v, (JsonSerializerOptions)null),
+                    v => JsonSerializer.Deserialize<List<string>>(v, (JsonSerializerOptions)null),
+                    new ValueComparer<ICollection<string>>(
+                    (c1, c2) => c1.SequenceEqual(c2),
+                    c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
+                    c => (ICollection<string>)c.ToList()));
 
+            base.OnModelCreating(modelBuilder);
 
         }
 
