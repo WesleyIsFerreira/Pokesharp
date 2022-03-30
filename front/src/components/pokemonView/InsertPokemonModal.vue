@@ -80,34 +80,33 @@
                                             />
                                         </div>
                                     </div>
-
-                                    <div class="grid grid-cols-2">
-                                        <div class="mr-1">
-                                            <label for="heightPokemon" class="label-form">Tipo</label>
-                                            <select v-model="pokemon.gender" id="genderPokemon" class="select-form" aria-label=".form-select-sm example">
-                                                <option value="unknown" selected>Desconhecido</option>
-                                                <option value="male">Masculino</option>
-                                                <option value="female">Feminino</option>
-                                                <option value="both">Ambos</option>
-                                            </select>
-                                        </div>
-                                        <div class="ml-1">
-                                            <label for="weightPokemon" class="label-form">Fraqueza</label>
-                                            <select class="form-multiselect block w-full mt-1" multiple>
-                                                <option value="1">One</option>
-                                                <option value="2">Two</option>
-                                                <option value="3">Three</option>
-                                                <option value="4">Four</option>
-                                                <option value="5">Five</option>
-                                                <option value="6">Six</option>
-                                                <option value="7">Seven</option>
-                                                <option value="8">Eight</option>
-                                                <option value="9">Nine</option>
-                                                <option value="10">Ten</option>
-                                            </select>
-                                        </div>
-                                    </div>
-
+                                    <label for="abilityPokemon" class="label-form">Habilidades</label>
+                                    <Multiselect
+                                        id="abilityPokemon"
+                                        v-model="abilitiesPk"
+                                        :options="listAbilities"
+                                        mode="tags"
+                                        :close-on-select="false"
+                                        :searchable="true"
+                                    />
+                                    <label for="heightPokemon" class="label-form">Tipo</label>
+                                    <Multiselect
+                                        id="heightPokemon"
+                                        v-model="typePk"
+                                        :options="options"
+                                        mode="tags"
+                                        :close-on-select="false"
+                                        :searchable="true"
+                                    />
+                                    <label for="weightPokemon" class="label-form">Fraqueza</label>
+                                    <Multiselect
+                                        id="weightPokemon"
+                                        v-model="weaknessesPk"
+                                        :options="options"
+                                        mode="tags"
+                                        :close-on-select="false"
+                                        :searchable="true"
+                                    />
                                 </div>
                             </div>
                         </div>
@@ -142,23 +141,99 @@
 
 <script>
 import { reactive, ref } from '@vue/reactivity'
-import Pokemon from '../../services/ability'
+import Pokemon from '../../services/auth'
+import Ability from '../../services/ability'
+import Multiselect from '@vueform/multiselect'
+import { onMounted } from '@vue/runtime-core'
+
+
 export default {
     name: 'InsertPokemonModal',
+    components: {
+      Multiselect,
+    },
+    props: ['testProp'],
     setup(){
+        //setando habilidades
+        const listAbilities = ref(null)
+        const abilities = ref(null)
+
+        function updateAbilities(){
+            Ability.list().then((resp) => {
+                listAbilities.value = resp.data.abilities.map( function(ability, i){
+                    console.log(ability.name ,i)
+                    return ability.name
+                })
+                console.log(listAbilities)
+            }).catch(function (error) {
+                console.log(error)
+            })
+        }
+        updateAbilities()
+
+        onMounted(() => {
+            
+            $(this.$refs.createPokemonModal).on("hidden.bs.modal", console.log('kkkkkkkkkkk'))
+        })
+
+        
+
+
+        //setando tipos e fraquezas
+        const types = ref(null)
+        const weaknesses = ref(null)
+        const options = ref([
+            { value: 'normal', label:  'Normal'},
+            { value: 'fire', label:  'fogo'},
+            { value: 'water', label:  'água'},
+            { value: 'grass', label:  'grama'},
+            { value: 'flying', label:  'voador'},
+            { value: 'fighting', label:  'lutador'},
+            { value: 'poison', label:  'veneno'},
+            { value: 'electric', label:  'elétrico'},
+            { value: 'ground', label:  'terra'},
+            { value: 'rock', label:  'pedra'},
+            { value: 'psychic', label:  'psíquico'},
+            { value: 'ice', label:  'gelo'},
+            { value: 'bug', label:  'inseto'},
+            { value: 'ghost', label:  'fantasma'},
+            { value: 'steel', label:  'ferro'},
+            { value: 'dragon', label:  'dragão'},
+            { value: 'dark', label:  'sombrio'},
+            { value: 'fairy', label:  'fada'}
+        ])
+
         //setando para usar o toast
         const { toast } = require('tailwind-toast')
         const createPokemonModal = ref(null);
 
-        //Criação de abilidades
-        const pokemon = reactive({name:'', description:''})
+        //Criação de pokemon
+        const pokemon = reactive({
+            name:'',
+            description:'',
+            category: '',
+            gender: '',
+            height: '',
+            weight: ''
+        })
+            const typePk = reactive([])
+            const weaknessesPk = reactive([])
+            const abilitiesPk = reactive([])
+
         function savePokemon(){
             const newPokemon = {
                 Name: pokemon.name,
-                Description: pokemon.description
+                Description: pokemon.description,
+                Category: pokemon.category,
+                Gender: pokemon.gender,
+                Height: pokemon.height,
+                Weight: pokemon.weight,
+                Type: typePk,
+                Weaknesses: weaknessesPk,
+                Abilities: abilitiesPk,
             }
 
-            if (!newPokemon.Name || !newPokemon.Description){
+            if (pokemon.name){
 
                 let div = document.getElementsByClassName('modal-backdrop')[0]
                 div.classList.add("z-40")
@@ -260,12 +335,19 @@ export default {
             stopLoading,
             savePokemon,
             pokemon,
-            createPokemonModal
+            createPokemonModal,
+            options,
+            types,
+            weaknesses,
+            abilities,
+            listAbilities,
+            typePk,
+            weaknessesPk,
+            abilitiesPk,
+            updateAbilities
         }
     }
 }
 </script>
 
-<style>
-
-</style>
+<style src="@vueform/multiselect/themes/default.css"></style>

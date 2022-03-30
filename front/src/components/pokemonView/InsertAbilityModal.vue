@@ -83,9 +83,9 @@ import Ability from '../../services/ability'
 export default {
     name: 'InsertAbilityModal',
     setup(){
+
         //setando para usar o toast
         const { toast } = require('tailwind-toast')
-        const createAbilityModal = ref(null);
 
         //Criação de abilidades
         const ability = reactive({name:'', description:''})
@@ -198,8 +198,7 @@ export default {
             startLoading,
             stopLoading,
             saveAbility,
-            ability,
-            createAbilityModal
+            ability
         }
     }
 }
