@@ -13,6 +13,6 @@ namespace JwtLoginAPI.Domain.Commands.Requests
         public double Weight { get; set; }
         public ICollection<string>? Type { get; set; }
         public ICollection<string>? Weaknesses { get; set; }
-        public List<Ability>? Abilities { get; set; }
+        public List<int>? Abilities { get; set; }
     }
 }

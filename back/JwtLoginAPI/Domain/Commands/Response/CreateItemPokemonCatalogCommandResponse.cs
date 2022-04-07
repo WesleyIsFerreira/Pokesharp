@@ -15,5 +15,8 @@ namespace JwtLoginAPI.Domain.Commands.Response
         public ICollection<string>? Type { get; set; }
         public ICollection<string>? Weaknesses { get; set; }
         public List<Ability>? Abilities { get; set; }
+        public Boolean Success { get; set; } = true;
+        public string? Error { get; set; }
+
     }
 }

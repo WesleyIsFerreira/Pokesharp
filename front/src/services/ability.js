@@ -5,7 +5,7 @@ export default {
         return http.post('api/pokedex/createability', parans)
     },
 
-    list:() => {
+    updateList:() => {
         return http.get('api/pokedex/listabilities')
     }
 }

@@ -7,7 +7,7 @@
             <fa icon="plus" /> Criar Habilidade
         </button>
         <br />
-        <button class="btn-primary mx-2 mt-2" type="button" data-bs-toggle="modal" data-bs-target="#createPokemonModal">
+        <button id="btnCreatePoemon" class="btn-primary mx-2 mt-2" type="button" data-bs-toggle="modal" data-bs-target="#createPokemonModal">
             <fa icon="plus" /> Criar Pokemon
         </button>
         </div>
@@ -24,6 +24,7 @@ import NavBarVue from '../components/NavBar.vue'
 import ModalAddAbility from '../components/pokemonView/InsertAbilityModal.vue'
 import ModalAddPokemon from '../components/pokemonView/InsertPokemonModal.vue'
 
+
 export default {
     name: 'Pokemons',
     components: {
@@ -32,7 +33,7 @@ export default {
         ModalAddPokemon
     },
     setup(){
-        
+      
     }
 }
 </script>

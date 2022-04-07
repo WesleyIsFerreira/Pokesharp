@@ -14,14 +14,27 @@ namespace JwtLoginAPI.Domain.Handlers
 
         public async Task<AddPokemonAbilityCommandResponse> AddPokemonAbility(AddPokemonAbilityCommandRequest request)
         {
-            var ability = await _context.Abilities.FindAsync(request.AbilityId);
+            var success = true;
 
-            var pokemon = await _context.Pokemons
-                .Where(c => c.Id == request.PokemonId)
-                .Include(c => c.Abilities)
-                .FirstOrDefaultAsync();
+            request.AbilitiesId.ForEach(async delegate (int id)
+            {
+                
+                var ability = await _context.Abilities.FindAsync(id);
 
-            if (ability == null || pokemon == null)
+                var pokemon = await _context.Pokemons
+                    .Where(c => c.Id == request.PokemonId)
+                    .Include(c => c.Abilities)
+                    .FirstOrDefaultAsync();
+
+                if (ability == null || pokemon == null)
+                {
+                    success = false;
+                }
+
+                pokemon.Abilities.Add(ability);
+            });
+
+            if (!success)
             {
                 return new AddPokemonAbilityCommandResponse
                 {
@@ -29,8 +42,6 @@ namespace JwtLoginAPI.Domain.Handlers
                     Success = false
                 };
             }
-
-            pokemon.Abilities.Add(ability);
 
             await _context.SaveChangesAsync();
             return new AddPokemonAbilityCommandResponse

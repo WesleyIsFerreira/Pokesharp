@@ -80,9 +80,13 @@
 <script>
 import { reactive, ref } from '@vue/reactivity'
 import Ability from '../../services/ability'
+import { useStore } from 'vuex'
+
 export default {
     name: 'InsertAbilityModal',
     setup(){
+
+        const store = useStore()
 
         //setando para usar o toast
         const { toast } = require('tailwind-toast')
@@ -140,7 +144,7 @@ export default {
                         fontTone: 200
                     })
                     .show()
-
+                    store.commit('UPDATE_LIST_ABILITIES')
                 document.getElementById('btnClose').click()
 
                 ability.name = ''

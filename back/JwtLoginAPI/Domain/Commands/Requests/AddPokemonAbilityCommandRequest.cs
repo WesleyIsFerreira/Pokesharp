@@ -3,6 +3,6 @@
     public class AddPokemonAbilityCommandRequest
     {
         public int PokemonId { get; set; }
-        public int AbilityId { get; set; }
+        public List<int>? AbilitiesId { get; set; }
     }
 }
