@@ -9,4 +9,4 @@ O objetivo é criar uma Pokedex para colocar em pratica algumas habilidades estu
 CQRS, Mappers, Fluentvalidation, Ef Core, JWT Login
 
 ### Front-end
-Vue3, axios, tailwind, fortawesome
+Vue3, axios, tailwind, fontawesome
