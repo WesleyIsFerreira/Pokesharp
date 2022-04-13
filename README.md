@@ -1,4 +1,4 @@
-# Pokedex-Vue3.Net
+# Pokedex com Vue3 e C#
 
 ## Em desenvolvimento :)
 O objetivo é criar uma Pokedex para colocar em pratica algumas habilidades estudadas em Vue e C#, desde design partners estruturais a algumas técnicas de boas práticas.
