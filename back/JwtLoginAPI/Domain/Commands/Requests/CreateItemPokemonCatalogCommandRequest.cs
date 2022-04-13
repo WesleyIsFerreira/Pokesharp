@@ -11,6 +11,7 @@ namespace JwtLoginAPI.Domain.Commands.Requests
         public Gender Gender { get; set; }
         public double Height { get; set; }
         public double Weight { get; set; }
+        public IFormFile? Photo { get; set; }
         public ICollection<string>? Type { get; set; }
         public ICollection<string>? Weaknesses { get; set; }
         public List<int>? Abilities { get; set; }

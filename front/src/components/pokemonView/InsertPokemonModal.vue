@@ -84,15 +84,78 @@
             <div class="flex justify-center">
               <div>
                 <div class="mb-3 xl:w-96">
-                  <label for="namePokemon" class="label-form">Nome</label>
-                  <input
-                    autocomplete="off"
-                    v-model="pokemon.name"
-                    type="text"
-                    class="input-form"
-                    id="namePokemon"
-                    placeholder="Digite o nome"
-                  />
+
+                  <div class="grid grid-cols-2"> 
+                    <div>
+                      <label for="imgPokeon" class="label-form">Foto</label><br />
+                      <div class="h-24 relative bg-gray-200 p-1">
+                        <button 
+                          @click="clearImg()" 
+                          label="Procurar imagem" 
+                          type="button" 
+                          class="
+                            absolute
+                            right-1
+                            top-1
+                            inline-block 
+                            px-2 py-1.5 
+                            bg-red-500 
+                            text-white 
+                            font-medium 
+                            text-xs 
+                            leading-tight 
+                            uppercase 
+                            rounded 
+                            shadow-md 
+                            hover:bg-red-600 hover:shadow-lg 
+                            focus:bg-red-600 focus:shadow-lg focus:outline-none focus:ring-0 
+                            transition duration-150 ease-in-out
+                          "
+                        >
+                          <fa icon="minus" />
+                        </button>
+                        <button 
+                          @click="$refs.EventfileInput.click()" 
+                          label="Procurar imagem" 
+                          type="button" 
+                          class="
+                            absolute
+                            right-1
+                            bottom-1
+                            inline-block 
+                            px-2 py-1.5 
+                            bg-blue-500 
+                            text-white 
+                            font-medium 
+                            text-xs 
+                            leading-tight 
+                            uppercase 
+                            rounded 
+                            shadow-md 
+                            hover:bg-blue-600 hover:shadow-lg 
+                            focus:bg-blue-600 focus:shadow-lg focus:outline-none focus:ring-0 
+                            transition duration-150 ease-in-out
+                          "
+                        >
+                          <fa icon="plus" />
+                        </button>
+                        <input style="display:none" ref="EventfileInput" @change="onEventFilePicked" type="file" name="upload" accept="image/*" required />
+                        <img class="h-full mx-auto" :src="imageUrl" />
+                      </div>
+                    </div>
+                    <div class="pl-2">
+                      <label for="namePokemon" class="label-form">Nome</label>
+                      <input
+                        autocomplete="off"
+                        v-model="pokemon.name"
+                        type="text"
+                        class="input-form"
+                        id="namePokemon"
+                        placeholder="Digite o nome"
+                        required
+                      />
+                    </div>
+                  </div>
 
                   <label for="descriptionPokemon" class="label-form"
                     >Descrição</label
@@ -105,6 +168,7 @@
                     class="input-form"
                     id="descriptionPokemon"
                     placeholder="Digite a descrição"
+                    required
                   />
 
                   <label for="categoryPokemon" class="label-form"
@@ -117,6 +181,7 @@
                     class="input-form"
                     id="categoryPokemon"
                     placeholder="Digite a categoria"
+                    required
                   />
 
                   <label for="genderPokemon" class="label-form">Genero</label>
@@ -144,6 +209,7 @@
                         class="input-form"
                         id="heightPokemon"
                         placeholder="Digite a altura"
+                        required
                       />
                     </div>
                     <div class="ml-1">
@@ -157,6 +223,7 @@
                         class="input-form"
                         id="weightPokemon"
                         placeholder="Digite a largura"
+                        required
                       />
                     </div>
                   </div>
@@ -170,6 +237,7 @@
                     mode="tags"
                     :close-on-select="false"
                     :searchable="true"
+                    required
                   />
                   <label for="heightPokemon" class="label-form">Tipo</label>
                   <Multiselect
@@ -179,6 +247,7 @@
                     mode="tags"
                     :close-on-select="false"
                     :searchable="true"
+                    required
                   />
                   <label for="weightPokemon" class="label-form">Fraqueza</label>
                   <Multiselect
@@ -188,6 +257,7 @@
                     mode="tags"
                     :close-on-select="false"
                     :searchable="true"
+                    required
                   />
                 </div>
               </div>
@@ -288,31 +358,29 @@
 </template>
 
 <script>
-import { reactive, ref } from "@vue/reactivity";
-import Pokemon from "../../services/pokemon";
-import Multiselect from "@vueform/multiselect";
-import { useStore } from "vuex";
-import { computed } from "@vue/runtime-core";
+import { reactive, ref } from "@vue/reactivity"
+import Pokemon from "../../services/pokemon"
+import Multiselect from "@vueform/multiselect"
+import { useStore } from "vuex"
+import { computed } from "@vue/runtime-core"
 
 export default {
   name: "InsertPokemonModal",
   components: {
-    Multiselect,
+    Multiselect
   },
   props: ["testProp"],
   setup() {
-    const store = useStore();
+    const store = useStore()
 
     //setando habilidades
-    store.commit("UPDATE_LIST_ABILITIES");
-    const listAbilities = computed(() => store.getters.nameAbilities);
-    const abilities = ref(null);
-
-    console.log(listAbilities.value);
+    store.commit("UPDATE_LIST_ABILITIES")
+    const listAbilities = computed(() => store.getters.nameAbilities)
+    const abilities = ref(null)
 
     //setando tipos e fraquezas
-    const types = ref(null);
-    const weaknesses = ref(null);
+    const types = ref(null)
+    const weaknesses = ref(null)
     const options = ref([
       { value: "normal", label: "Normal" },
       { value: "fire", label: "fogo" },
@@ -332,10 +400,37 @@ export default {
       { value: "dragon", label: "dragão" },
       { value: "dark", label: "sombrio" },
       { value: "fairy", label: "fada" },
-    ]);
+    ])
 
     //setando para usar o toast
-    const { toast } = require("tailwind-toast");
+    const { toast } = require("tailwind-toast")
+
+    //setando imagem pokemon
+    const imageUrl = ref('img/default.jpg')
+    const EventfileInput = ref(null)
+      
+    const onEventFilePicked = (event) => {
+      const files = event.target.files
+      const image = files[0]
+      console.log(image)
+      const filename = files[0].name
+      if (filename.lastIndexOf('.') <= 0) {
+        return alert('Por favor adicione um arquivo válido')
+      }
+      const fileReader = new FileReader()
+      fileReader.addEventListener('load', () => {
+        imageUrl.value = fileReader.result
+      })
+      fileReader.readAsDataURL(files[0])
+      photoPK.value = image
+
+      console.log(photoPK.value)
+    }
+
+    function clearImg(){
+      imageUrl.value = 'img/default.jpg'
+      EventfileInput.value.value = ''
+    }
 
     //Criação de pokemon
     const pokemon = reactive({
@@ -344,9 +439,10 @@ export default {
       category: "",
       gender: "",
       height: "",
-      weight: "",
-    });
+      weight: ""
+    })
 
+    const photoPK = ref(File)
     const abilitiesPk = ref([])
     const typePk = ref([])
     const weaknessesPk = ref([])
@@ -361,39 +457,18 @@ export default {
         Weight: pokemon.weight,
         Type: typePk.value,
         Weaknesses: weaknessesPk.value,
-        Abilities: abilitiesPk.value
-      };
-
-      if (!pokemon.name) {
-        console.log(newPokemon);
-
-        let div = document.getElementsByClassName("modal-backdrop")[0];
-        div.classList.add("z-40");
-
-        toast()
-          .default("Atenção:", "Campos em branco :(")
-          .with({
-            shape: "pill",
-            duration: 3000,
-            speed: 1000,
-            positionX: "end",
-            positionY: "top",
-            color: "bg-yellow-300",
-            fontColor: "text-black",
-            fontTone: 200,
-          })
-          .show();
-        return;
+        Abilities: abilitiesPk.value,
+        Photo: photoPK.value
       }
 
-      startLoading();
+      startLoading()
 
       Pokemon.create(newPokemon)
         .then(( resp ) => {
-          stopLoading();
+          stopLoading()
           console.log(resp)
-          let div = document.getElementsByClassName("modal-backdrop")[0];
-          div.classList.add("z-40");
+          let div = document.getElementsByClassName("modal-backdrop")[0]
+          div.classList.add("z-40")
 
           toast()
             .default("Sucesso:", "Habilidade criada")
@@ -407,15 +482,18 @@ export default {
               fontColor: "text-black",
               fontTone: 200,
             })
-            .show();
+            .show()
 
-          document.getElementById("btnClose").click();
+          document.getElementById("btnClose").click()
 
-          pokemon.name = "";
-          pokemon.description = "";
+          pokemon.name = ""
+          pokemon.description = ""
         })
         .catch(function (error) {
+          stopLoading()
           if (error.response) {
+            let div = document.getElementsByClassName("modal-backdrop")[0]
+            div.classList.add("z-40")
             if (error.response.data.errors)
               toast()
                 .default("Atenção:", error.response.data.errors[0].errorMessage)
@@ -429,10 +507,10 @@ export default {
                   fontColor: "white",
                   fontTone: 200,
                 })
-                .show();
+                .show()
             else
               toast()
-                .default("Erro:", "Entre inesperado")
+                .default("Erro:", "Erro inesperado")
                 .with({
                   shape: "pill",
                   duration: 3000,
@@ -443,21 +521,21 @@ export default {
                   fontColor: "white",
                   fontTone: 200,
                 })
-                .show();
+                .show()
           }
-          stopLoading();
-        });
+          stopLoading()
+        })
     }
 
     //Setando Loadings
-    const loading = ref(false);
+    const loading = ref(false)
 
     function startLoading() {
-      loading.value = true;
+      loading.value = true
     }
 
     function stopLoading() {
-      loading.value = false;
+      loading.value = false
     }
 
     return {
@@ -474,9 +552,14 @@ export default {
       typePk,
       weaknessesPk,
       abilitiesPk,
-    };
+      imageUrl,
+      clearImg,
+      onEventFilePicked,
+      EventfileInput,
+      photoPK
+    }
   },
-};
+}
 </script>
 
 <style src="@vueform/multiselect/themes/default.css"></style>

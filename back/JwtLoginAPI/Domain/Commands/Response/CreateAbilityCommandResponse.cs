@@ -3,7 +3,9 @@
     public class CreateAbilityCommandResponse
     {
         public int Id { get; set; }
-        public string name { get; set; } = String.Empty;
-        public string description { get; set; } = String.Empty;
+        public string Name { get; set; } = String.Empty;
+        public string Description { get; set; } = String.Empty;
+
+        public bool Sucesso = true;
     }
 }

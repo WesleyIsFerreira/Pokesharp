@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace JwtLoginAPI.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220323021150_setDB")]
-    partial class setDB
+    [Migration("20220412215619_pokemonPhoto")]
+    partial class pokemonPhoto
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -67,11 +67,9 @@ namespace JwtLoginAPI.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Type")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Weaknesses")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<double>("Weight")

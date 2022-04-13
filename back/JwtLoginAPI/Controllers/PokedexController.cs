@@ -11,18 +11,18 @@ namespace JwtLoginAPI.Controllers
     public class PokedexController : ControllerBase
     {
         [HttpPost("CreateAbility")]
-        public async Task<ActionResult<CreateAbilityCommandResponse>> CreateAbility(
+        public async Task<IActionResult> CreateAbility(
             [FromServices] IAbilityHandlerCommand handler,
             [FromBody] CreateAbilityCommandRequest command
         )
         {
-            return await handler.CreateAbility(command);
+            return Ok(await handler.CreateAbility(command));
         }
 
         [HttpPost("CreatePokemon")]
         public async Task<ActionResult<CreateItemPokemonCatalogCommandResponse>> CreatePokemon(
             [FromServices] IPokemonHandlerCommand handler,
-            [FromBody] CreateItemPokemonCatalogCommandRequest command
+            [FromForm] CreateItemPokemonCatalogCommandRequest command
         )
         {
             return await handler.CreatePokemon(command);
@@ -45,6 +45,14 @@ namespace JwtLoginAPI.Controllers
             return await handler.ListAbilities();
         }
 
-        
+        [HttpGet("ListPokemons")]
+        public async Task<IActionResult> ListPokemons(
+            [FromServices] IPokemonHandlerQuery handler
+        )
+        {
+            var temp = await handler.ListPokemons();
+            return Ok(temp);
+        }
+
     }
 }

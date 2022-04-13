@@ -1,6 +1,7 @@
 ﻿using JwtLoginAPI.Domain.Commands.Requests;
 using JwtLoginAPI.Domain.Commands.Response;
 using JwtLoginAPI.Domain.Entities;
+using JwtLoginAPI.Domain.Validators;
 
 namespace JwtLoginAPI.Domain.Handlers
 {
@@ -18,14 +19,26 @@ namespace JwtLoginAPI.Domain.Handlers
             newAbility.Name = request.Name;
             newAbility.Description = request.Description;
 
+            var validator = new AbilityValidator();
+
+            var results = validator.Validate(newAbility);
+
+            if (results.IsValid == false)
+            {
+                return new CreateAbilityCommandResponse
+                {
+                    Sucesso = false
+                };
+            }
+
             _context.Abilities.Add(newAbility);
             await _context.SaveChangesAsync();
 
             return new CreateAbilityCommandResponse
             {
                 Id = newAbility.Id,
-                name = newAbility.Name,
-                description = newAbility.Description
+                Name = newAbility.Name,
+                Description = newAbility.Description
             };
         }
 

@@ -7,6 +7,7 @@ namespace JwtLoginAPI.Domain.Commands.Entities
         public int Id { get; set; }
         public string Name { get; set; } = String.Empty;
         public string Description { get; set; } = String.Empty;
+        public string? Photo { get; set; }
         public string Category { get; set; } = String.Empty;
         public Gender Gender { get; set; }
         public double Height { get; set; }

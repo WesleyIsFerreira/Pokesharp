@@ -7,13 +7,22 @@ namespace JwtLoginAPI.Domain.Handlers
     public class PokemonHandlerCommand : IPokemonHandlerCommand
     {
         private readonly DataContext _context;
-        public PokemonHandlerCommand(DataContext context)
+        private readonly IWebHostEnvironment _hostEnvironment;
+        public PokemonHandlerCommand(DataContext context, IWebHostEnvironment hostEnvironment)
         {
             _context = context;
+            _hostEnvironment = hostEnvironment;
         }
 
         public async Task<CreateItemPokemonCatalogCommandResponse> CreatePokemon(CreateItemPokemonCatalogCommandRequest request)
         {
+            string pathTeste = Directory.GetCurrentDirectory();
+
+            string fileName = Path.GetFileNameWithoutExtension(path: request.Photo.FileName);
+            string extention = Path.GetExtension(path: request.Photo.FileName);
+            fileName = fileName + DateTime.Now.ToString("yymmssfff") + extention;
+            string path = Path.Combine(pathTeste + "/Domain/Handlers/img/", fileName);
+
             Pokemon newPokemon = new()
             {
                 Name = request.Name,
@@ -23,8 +32,14 @@ namespace JwtLoginAPI.Domain.Handlers
                 Height = request.Height,
                 Weight = request.Weight,
                 Type = request.Type,
-                Weaknesses = request.Weaknesses
+                Weaknesses = request.Weaknesses,
+                Photo = request.Photo.FileName
             };
+
+            using (var fileStream = new FileStream(path, FileMode.Create))
+            {
+                await request.Photo.CopyToAsync(fileStream);
+            }
 
             try
             {
@@ -37,9 +52,15 @@ namespace JwtLoginAPI.Domain.Handlers
 
                 bool resp = await VincPokemonAbility(pkAbility);
 
+                if (!resp)
+                {
+                    throw new InvalidOperationException("ability not found");
+                }
+
                 return new CreateItemPokemonCatalogCommandResponse
                 {
                     Id = newPokemon.Id,
+                    Name = newPokemon.Name,
                     Description = newPokemon.Description,
                     Category = newPokemon.Category,
                     Gender = newPokemon.Gender,

@@ -9,7 +9,7 @@
 </template>
 
 <style lang="postcss" >
-    .btn-primary {
+    .btn-success {
         @apply  inline-block 
                 px-6 py-2.5 
                 bg-green-500 
@@ -63,5 +63,8 @@
               ease-in-out
               m-0
               focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none
+    }
+    .z-100{
+      z-index: 100;
     }
 </style>

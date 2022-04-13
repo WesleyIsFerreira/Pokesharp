@@ -14,12 +14,24 @@ namespace JwtLoginAPI.Domain.Handlers
 
         public async Task<GetAbilitiesQueryResponse> ListAbilities()
         {
-
             var abilities = await _context.Abilities.ToListAsync();
 
             return new GetAbilitiesQueryResponse
             {
                 abilities = abilities,
+            };
+        }
+
+        public async Task<GetPokemonsQueryResponse> ListPokemons()
+        {
+           
+            var pokemons = await _context.Pokemons.ToListAsync();
+            
+            
+
+            return new GetPokemonsQueryResponse
+            {
+                Pokemons = pokemons,
             };
         }
     }

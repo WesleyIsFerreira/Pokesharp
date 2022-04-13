@@ -8,10 +8,18 @@ namespace JwtLoginAPI.Domain.Validators
         public UserValidator()
         {
             RuleFor(c => c.UserName)
+                .MinimumLength(4)
+                .MaximumLength(15)
                 .NotEmpty();
 
             RuleFor(c => c.Password)
-                .NotEmpty();
+                .NotEmpty()
+                .MinimumLength(4)
+                .MaximumLength(15)
+                .Matches("[A-Z]")
+                .Matches("[a-z]")
+                .Matches("[0-9]")
+                .Matches("[^a-zA-Z0-9]");
         }
         
     }

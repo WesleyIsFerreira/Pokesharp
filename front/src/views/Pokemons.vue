@@ -3,11 +3,11 @@
         <NavBarVue page="Pokemons"/>
 
         <div class="float-right">
-        <button class="btn-primary mx-2 mt-2" type="button" data-bs-toggle="modal" data-bs-target="#createAbilityModal">
+        <button class="btn-success mx-2 mt-2" type="button" data-bs-toggle="modal" data-bs-target="#createAbilityModal">
             <fa icon="plus" /> Criar Habilidade
         </button>
         <br />
-        <button id="btnCreatePoemon" class="btn-primary mx-2 mt-2" type="button" data-bs-toggle="modal" data-bs-target="#createPokemonModal">
+        <button id="btnCreatePoemon" class="btn-success mx-2 mt-2" type="button" data-bs-toggle="modal" data-bs-target="#createPokemonModal">
             <fa icon="plus" /> Criar Pokemon
         </button>
         </div>
