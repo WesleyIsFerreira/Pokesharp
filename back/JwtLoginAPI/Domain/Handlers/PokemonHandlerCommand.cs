@@ -16,12 +16,16 @@ namespace JwtLoginAPI.Domain.Handlers
 
         public async Task<CreateItemPokemonCatalogCommandResponse> CreatePokemon(CreateItemPokemonCatalogCommandRequest request)
         {
-            string pathTeste = Directory.GetCurrentDirectory();
+            string pathDefault = Directory.GetCurrentDirectory();
 
             string fileName = Path.GetFileNameWithoutExtension(path: request.Photo.FileName);
+            string newName = fileName + DateTime.Now.ToString("yyyyMMddHHmmssfff") + "_" + Guid.NewGuid().ToString("N");
+
             string extention = Path.GetExtension(path: request.Photo.FileName);
-            fileName = fileName + DateTime.Now.ToString("yymmssfff") + extention;
-            string path = Path.Combine(pathTeste + "/Domain/Handlers/img/", fileName);
+
+            string oldPath = Path.Combine(pathDefault + "/Domain/Handlers/img/", fileName + extention);
+            string newPath = Path.Combine(pathDefault + "/Domain/Handlers/img/", newName + extention);
+            
 
             Pokemon newPokemon = new()
             {
@@ -33,13 +37,15 @@ namespace JwtLoginAPI.Domain.Handlers
                 Weight = request.Weight,
                 Type = request.Type,
                 Weaknesses = request.Weaknesses,
-                Photo = request.Photo.FileName
+                Photo = newName + extention
             };
 
-            using (var fileStream = new FileStream(path, FileMode.Create))
+            using (var fileStream = new FileStream(oldPath, FileMode.Create))
             {
                 await request.Photo.CopyToAsync(fileStream);
             }
+
+            System.IO.File.Move(oldPath, newPath);
 
             try
             {
