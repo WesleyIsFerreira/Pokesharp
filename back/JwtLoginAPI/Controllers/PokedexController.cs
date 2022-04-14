@@ -28,15 +28,6 @@ namespace JwtLoginAPI.Controllers
             return await handler.CreatePokemon(command);
         }
 
-        [HttpPost("AddPokemonAbility")]
-        public async Task<ActionResult<AddPokemonAbilityCommandResponse>> AddPokemonAbility(
-            [FromServices] IAddPokemonAbilityHandler handler,
-            [FromBody] AddPokemonAbilityCommandRequest command
-        )
-        {
-            return await handler.AddPokemonAbility(command);
-        }
-
         [HttpGet("ListAbilities")]
         public async Task<ActionResult<GetAbilitiesQueryResponse>> ListAbilities(
             [FromServices] IPokemonHandlerQuery handler

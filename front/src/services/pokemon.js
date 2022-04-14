@@ -2,9 +2,7 @@ import { http } from './config'
 
 export default {
     create:(parans) => {
-        console.log('AQuiiiiiii',parans)
         var formData = new FormData()
-        formData.append('username', 'Chris')
         formData.append('Name', parans.Name)
         formData.append('Description', parans.Description)
         formData.append('Category', parans.Category)
@@ -13,8 +11,12 @@ export default {
         formData.append('Weight', parans.Weight)
         formData.append('Type', parans.Type)
         formData.append('Weaknesses', parans.Weaknesses)
-        formData.append('Abilities', parans.Abilities)
         formData.append('Photo', parans.Photo)
+
+        for (let i = 0; i < parans.Abilities.length; i++) {
+            formData.append('Abilities[]', parans.Abilities[i]);
+        }
+        
         return http.post('api/pokedex/createpokemon', formData)
     },
 }
